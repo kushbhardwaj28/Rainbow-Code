@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// http://codingtra.in
-// Steering Text Paths
-// Video: [coming soon]
-
 function Vehicle(x, y) {
   this.pos = createVector(random(width), random(height));
   this.target = createVector(x, y);
@@ -11,6 +6,8 @@ function Vehicle(x, y) {
   this.r = 8;
   this.maxspeed = 10;
   this.maxforce = 1;
+    this.hue = 255;
+    this.saturation = 0;
 }
 
 Vehicle.prototype.behaviors = function() {
@@ -36,9 +33,13 @@ Vehicle.prototype.update = function() {
 }
 
 Vehicle.prototype.show = function() {
-  stroke(255);
+//    console.log(re);
+  stroke(this.hue,this.saturation,255);
   strokeWeight(this.r);
   point(this.pos.x, this.pos.y);
+//    this.a+=1;
+//    if(this.a>255)
+//        this.a = 0;
 }
 
 
@@ -48,6 +49,8 @@ Vehicle.prototype.arrive = function(target) {
   var speed = this.maxspeed;
   if (d < 100) {
     speed = map(d, 0, 100, 0, this.maxspeed);
+      this.hue = map(d,0,100,0,360);
+      this.saturation = map(d,0,100,0,100);      
   }
   desired.setMag(speed);
   var steer = p5.Vector.sub(desired, this.vel);
